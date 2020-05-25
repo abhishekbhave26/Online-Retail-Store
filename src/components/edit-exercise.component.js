@@ -138,12 +138,13 @@ export default class EditExercise extends Component {
             <DatePicker
               selected={this.state.date}
               onChange={this.onChangeDate}
+              maxDate={new Date()}
             />
           </div>
         </div>
 
         <div className="form-group">
-          <input type="submit" value="Edit Exercise Log" className="btn btn-primary" />
+          <input type="submit" value="Submit Changes" className="btn btn-primary" />
         </div>
       </form>
     </div>
