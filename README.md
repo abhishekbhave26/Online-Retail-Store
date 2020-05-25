@@ -1,3 +1,9 @@
+npm run server for running both backend and frontend.
+
+Open two terminals one for backend folder and one for . folder.
+Run npm run server at both places
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Code Credits : https://github.com/beaucarnes/mern-exercise-tracker-mongodb
