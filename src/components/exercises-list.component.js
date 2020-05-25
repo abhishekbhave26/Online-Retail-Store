@@ -19,9 +19,14 @@ export default class ExercisesList extends Component {
     super(props);
 
     this.deleteExercise = this.deleteExercise.bind(this)
+    this.onChangeUsername = this.onChangeUsername.bind(this);
 
-    this.state = {exercises: []};
-  }
+    this.state = {
+      exercises: [],
+      users: [],
+      username: ''
+    }
+}
 
   componentDidMount() {
     axios.get('http://localhost:5000/exercises/')
@@ -31,7 +36,40 @@ export default class ExercisesList extends Component {
       .catch((error) => {
         console.log(error);
       })
+
+    axios.get('http://localhost:5000/users/')
+      .then(response => {
+        const user = {
+          username: 'ALL'
+        }
+        var newList = [user].concat(response.data);
+        if (newList.length > 1) {
+          this.setState({
+            users: newList.map(user => user.username),
+            username: newList[0].username,
+          })
+        }
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
+
+  onChangeUsername(e) {
+    
+    this.setState({
+      username: e.target.value
+    })
+    axios.get('http://localhost:5000/exercises/username/'+e.target.value)
+    .then(response => {
+      this.setState({ exercises: response.data})
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    
+}
 
   deleteExercise(id) {
     axios.delete('http://localhost:5000/exercises/'+id)
@@ -48,10 +86,30 @@ export default class ExercisesList extends Component {
     })
   }
 
+
   render() {
     return (
       <div>
         <h3>Logged Exercises</h3>
+        
+        <div className="form-group"> 
+          <label>Filter by User: </label>
+          <select ref="userInput"
+              required
+              className="form-control"
+              value={this.state.username}
+              onChange={this.onChangeUsername}>
+              {
+                this.state.users.map(function(user) {
+                  return <option 
+                    key={user}
+                    value={user}>{user}
+                    </option>;
+                })
+              }
+          </select>
+        </div>
+        
         <table className="table">
           <thead className="thead-light">
             <tr>
