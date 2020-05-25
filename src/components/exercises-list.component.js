@@ -5,7 +5,7 @@ import axios from 'axios';
 const Exercise = props => (
   <tr>
     <td>{props.exercise.username}</td>
-    <td><Link to={"/edit/"+props.exercise._id}>{props.exercise.description}</Link></td>
+    <td>{props.exercise.description}</td>
     <td>{props.exercise.duration}</td>
     <td>{props.exercise.date.substring(0,10)}</td>
     <td>
@@ -40,7 +40,7 @@ export default class ExercisesList extends Component {
     axios.get('http://localhost:5000/users/')
       .then(response => {
         const user = {
-          username: 'ALL'
+          username: '-- ALL USERS'
         }
         var newList = [user].concat(response.data);
         if (newList.length > 1) {
