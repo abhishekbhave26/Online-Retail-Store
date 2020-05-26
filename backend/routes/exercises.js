@@ -61,7 +61,7 @@ router.route('/update/:id').post((req,res) => {
 
 // returns list of exercises with given username
 router.route('/username/:id').get((req, res) => {
-  if(req.params.id=='ALL')
+  if(req.params.id=='-- ALL USERS --')
   {
     Exercise.find()
     .then(exercises => res.json(exercises))

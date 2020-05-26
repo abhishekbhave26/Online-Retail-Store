@@ -20,7 +20,8 @@ export default class ExercisesList extends Component {
 
     this.deleteExercise = this.deleteExercise.bind(this)
     this.onChangeUsername = this.onChangeUsername.bind(this);
-
+    this.handleSearch = this.handleSearch.bind(this);
+    
     this.state = {
       exercises: [],
       users: [],
@@ -40,7 +41,7 @@ export default class ExercisesList extends Component {
     axios.get('http://localhost:5000/users/')
       .then(response => {
         const user = {
-          username: '-- ALL USERS'
+          username: '-- ALL USERS --'
         }
         var newList = [user].concat(response.data);
         if (newList.length > 1) {
@@ -86,6 +87,12 @@ export default class ExercisesList extends Component {
     })
   }
 
+  handleSearch(e)  {
+    this.setState({
+      exercises: this.state.exercises.filter(exer => exer.description.includes(e.target.value))
+    })
+  };
+
 
   render() {
     return (
@@ -109,7 +116,16 @@ export default class ExercisesList extends Component {
               }
           </select>
         </div>
-        
+
+        <div className="input-group">
+        <input
+            type="text"
+            value={this.state.search}
+            onChange={this.handleSearch}
+            className="form-control"
+          />
+        </div>
+        <br/>
         <table className="table">
           <thead className="thead-light">
             <tr>
