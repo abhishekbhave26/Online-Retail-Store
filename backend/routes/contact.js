@@ -1,7 +1,7 @@
 const router = require('express').Router();
 let Contact = require('../models/contact.model');
 
-
+// creates a new contact request
 router.route('/').post((req, res) => {
   const name = req.body.name;
   const description = req.body.description;
