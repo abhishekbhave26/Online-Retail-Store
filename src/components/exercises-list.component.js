@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const Exercise = props => (
   <tr>
-    <td>{props.exercise.username}</td>
+    <td>{props.exercise.email}</td>
     <td>{props.exercise.description}</td>
     <td>{props.exercise.duration}</td>
     <td>{props.exercise.date.substring(0,10)}</td>
@@ -19,13 +19,13 @@ export default class ExercisesList extends Component {
     super(props);
 
     this.deleteExercise = this.deleteExercise.bind(this)
-    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     
     this.state = {
       exercises: [],
       users: [],
-      username: ''
+      email: ''
     }
 }
 
@@ -41,13 +41,13 @@ export default class ExercisesList extends Component {
     axios.get('http://localhost:5000/users/')
       .then(response => {
         const user = {
-          username: '-- ALL USERS --'
+          email: '-- ALL USERS --'
         }
         var newList = [user].concat(response.data);
         if (newList.length > 1) {
           this.setState({
-            users: newList.map(user => user.username),
-            username: newList[0].username,
+            users: newList.map(user => user.email),
+            email: newList[0].email,
           })
         }
         
@@ -57,12 +57,12 @@ export default class ExercisesList extends Component {
       })
   }
 
-  onChangeUsername(e) {
+  onChangeEmail(e) {
     
     this.setState({
-      username: e.target.value
+      email: e.target.value
     })
-    axios.get('http://localhost:5000/exercises/username/'+e.target.value)
+    axios.get('http://localhost:5000/exercises/user/'+e.target.value)
     .then(response => {
       this.setState({ exercises: response.data})
     })
@@ -104,8 +104,8 @@ export default class ExercisesList extends Component {
           <select ref="userInput"
               required
               className="form-control"
-              value={this.state.username}
-              onChange={this.onChangeUsername}>
+              value={this.state.email}
+              onChange={this.onChangeEmail}>
               {
                 this.state.users.map(function(user) {
                   return <option 

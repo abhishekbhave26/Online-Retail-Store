@@ -1,8 +1,28 @@
 const router = require('express').Router();
 const axios = require('axios');
+const bcrypt = require('bcrypt');
 const queryString = require('query-string');
+let User = require('../models/user.model');
 
 let token = null;
+
+router.route('/normal').post((req, res) => {
+   User.find({email: req.body.email})
+  .then( async user => {
+      if(user.length==0){
+          res.json('User does not exist')
+      }
+      if(await bcrypt.hash(req.body.password,10) == user[0].password){
+          res.json('You have logged in')
+      }
+      else{
+          res.json('Wrong password')
+      }
+    })
+  .catch(err => res.status(400).json('Error '+err));
+
+});
+
 
 router.route('/github').get((req, res) => {
     getGithubAccessTokenFromCode(req.query.code).

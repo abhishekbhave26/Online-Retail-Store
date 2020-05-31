@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const bcrypt = require('bcrypt');
 let User = require('../models/user.model');
 
 // find all users
@@ -9,11 +10,12 @@ router.route('/').get((req, res) => {
 });
 
 // create a new user
-router.route('/add').post((req, res) => {
-  const username = req.body.username;
+router.route('/add').post(async (req, res) => {
+  const name = req.body.name;
+  const email = req.body.email;
+  const password = await bcrypt.hash(req.body.password,10);
 
-  const newUser = new User({username});
-
+  const newUser = new User({name, email, password});
   newUser.save()
     .then(() => res.json('User added!'))
     .catch(err => res.status(400).json('Error: ' + err));
@@ -36,9 +38,10 @@ User.findByIdAndDelete(req.params.id)
 // Update user
 router.route('/update/:id').post((req,res) => {
 User.findById(req.params.id)
-.then(user => {
-  user.username=req.body.username;
-
+.then(async user => {
+  user.name=req.body.name;
+  user.password= await bcrypt.hash(req.body.password,10);
+  
   user.save()
   .then(() =>res.json('User updated'))
   .catch(err => res.status(400).json('Error: '+err));

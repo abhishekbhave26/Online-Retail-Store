@@ -7,14 +7,14 @@ export default class EditExercise extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeDuration = this.onChangeDuration.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      username: '',
+      email: '',
       description: '',
       duration: 0,
       date: new Date(),
@@ -26,7 +26,7 @@ export default class EditExercise extends Component {
     axios.get('http://localhost:5000/exercises/'+this.props.match.params.id)
       .then(response => {
         this.setState({
-          username: response.data.username,
+          email: response.data.email,
           description: response.data.description,
           duration: response.data.duration,
           date: new Date(response.data.date)
@@ -40,7 +40,7 @@ export default class EditExercise extends Component {
       .then(response => {
         if (response.data.length > 0) {
           this.setState({
-            users: response.data.map(user => user.username),
+            users: response.data.map(user => user.email),
           })
         }
       })
@@ -50,9 +50,9 @@ export default class EditExercise extends Component {
 
   }
 
-  onChangeUsername(e) {
+  onChangeEmail(e) {
     this.setState({
-      username: e.target.value
+      email: e.target.value
     })
   }
 
@@ -78,13 +78,11 @@ export default class EditExercise extends Component {
     e.preventDefault();
 
     const exercise = {
-      username: this.state.username,
+      email: this.state.email,
       description: this.state.description,
       duration: this.state.duration,
       date: this.state.date
     }
-
-    console.log(exercise);
 
     axios.post('http://localhost:5000/exercises/update/' + this.props.match.params.id, exercise)
       .then(res => console.log(res.data));
@@ -98,12 +96,12 @@ export default class EditExercise extends Component {
       <h3>Edit Exercise Log</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
-          <label>Username: </label>
+          <label>User: </label>
           <select ref="userInput"
               required
               className="form-control"
-              value={this.state.username}
-              onChange={this.onChangeUsername}>
+              value={this.state.email}
+              onChange={this.onChangeEmail}>
               {
                 this.state.users.map(function(user) {
                   return <option 
