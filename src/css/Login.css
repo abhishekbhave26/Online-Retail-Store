@@ -1,0 +1,20 @@
+.LoginDiv {
+    text-align: center;
+}
+
+.LoginMain{
+    display: inline-block;
+    width: 40%;
+}
+
+.LoginSocialButtons{
+    display: inline-block;
+    width: 22%;
+}
+
+.forgotPassword{
+    text-align: right;  
+    font-size: 12px;
+    font-style: oblique;
+}
+  

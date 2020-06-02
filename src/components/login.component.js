@@ -2,22 +2,23 @@ import React, { Component } from 'react';
 import * as queryString from 'query-string';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import '../css/Login.css';
 import { FacebookLoginButton, GithubLoginButton, MicrosoftLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 
 export default class Login extends Component {
 
     constructor(props) {
         super(props);
-    
+
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-    
+
         this.state = {
-          email: '',
-          password: ''
+            email: '',
+            password: ''
         }
-      }
+    }
 
     onChangeEmail(e) {
         this.setState({
@@ -33,11 +34,11 @@ export default class Login extends Component {
 
     onReset = () => {
         this.setState({
-          email: '',
-          password: ''
+            email: '',
+            password: ''
         })
-      }
-    
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
@@ -45,23 +46,22 @@ export default class Login extends Component {
             email: this.state.email,
             password: this.state.password
         }
-        
+
         this.setState({
             email: '',
             password: ''
         })
 
         axios.post('http://localhost:5000/authenticate/normal', user)
-            .then(res => 
-                {
-                    if(res.data==='SUCCESS'){
-                        Cookies.set('user', user.email, {expires:10})
-                        window.location = '/list';
-                    }
-                    else{
-                        window.location = '/login';
-                    }
-                });
+            .then(res => {
+                if (res.data === 'SUCCESS') {
+                    Cookies.set('user', user.email, { expires: 10 })
+                    window.location = '/list';
+                }
+                else {
+                    window.location = '/login';
+                }
+            });
     }
 
 
@@ -95,12 +95,13 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div>
-                <div>
-                    <h3>Login</h3>
+            <div className="LoginDiv">
+                <div className="LoginMain">
+                    <h3 style={{ textAlign: "center" }}>Login</h3>
+                    <br/>
                     <form onSubmit={this.onSubmit} onReset={this.onReset}>
                         <div className="form-group">
-                            <label>Email: </label>
+                            <label>Email </label>
                             <input type="email"
                                 required
                                 className="form-control"
@@ -108,14 +109,16 @@ export default class Login extends Component {
                                 onChange={this.onChangeEmail}
                             />
 
-                            <label>Password: </label>
+                            <label>Password </label>
                             <input type="password"
                                 required
                                 className="form-control"
                                 value={this.state.password}
                                 onChange={this.onChangePassword}
                             />
-
+                        </div>
+                        <div className="form-group">
+                            <a className="forgotPassword" href="#">Forgot your password ?</a>
                         </div>
                         <div className="form-group">
                             <input type="submit" value="Submit" className="btn btn-primary" /> &nbsp;
@@ -123,12 +126,13 @@ export default class Login extends Component {
                         </div>
                     </form>
                 </div>
-
-                <GithubLoginButton onClick={this.githubLogin} />
-                <FacebookLoginButton onClick={this.facebookLogin} />
-                <GoogleLoginButton onClick={this.facebookLogin} />
-                <MicrosoftLoginButton onClick={this.facebookLogin} />
-                
+                <br />
+                <div className="LoginSocialButtons">
+                    <GithubLoginButton onClick={this.githubLogin} />
+                    <FacebookLoginButton onClick={this.facebookLogin} />
+                    <GoogleLoginButton onClick={this.facebookLogin} />
+                    <MicrosoftLoginButton onClick={this.facebookLogin} />
+                </div>
             </div>
         )
     }
