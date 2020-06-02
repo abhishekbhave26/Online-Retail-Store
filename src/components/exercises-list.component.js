@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const Exercise = props => (
   <tr>
@@ -30,6 +31,11 @@ export default class ExercisesList extends Component {
 }
 
   componentDidMount() {
+
+    if(Cookies.get('user')===undefined){
+      window.location='/login'
+    }
+
     axios.get('http://localhost:5000/exercises/')
       .then(response => {
         this.setState({ exercises: response.data })
@@ -37,6 +43,8 @@ export default class ExercisesList extends Component {
       .catch((error) => {
         console.log(error);
       })
+
+      
 
     axios.get('http://localhost:5000/users/')
       .then(response => {

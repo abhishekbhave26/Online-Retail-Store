@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as queryString from 'query-string';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { FacebookLoginButton, GithubLoginButton, MicrosoftLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 
 export default class Login extends Component {
@@ -44,14 +45,23 @@ export default class Login extends Component {
             email: this.state.email,
             password: this.state.password
         }
-        axios.post('http://localhost:5000/authenticate/normal', user)
-            .then(res => console.log(res.data));
-
+        
         this.setState({
             email: '',
             password: ''
         })
-        //window.location = '/list';
+
+        axios.post('http://localhost:5000/authenticate/normal', user)
+            .then(res => 
+                {
+                    if(res.data==='SUCCESS'){
+                        Cookies.set('user', user.email, {expires:10})
+                        window.location = '/list';
+                    }
+                    else{
+                        window.location = '/login';
+                    }
+                });
     }
 
 
