@@ -27,6 +27,16 @@ router.route('/:id').get((req,res) => {
   .catch(err => res.status(400).json('Error: '+err));
 });
 
+
+// find a user by email id
+router.route('/email/:id').get((req,res) => {
+  User.find({email: req.params.id})
+  .then(user =>res.json(user))
+  .catch(err => res.status(400).json('Error: '+err));
+});
+
+
+
 // delete a user
 router.route('/:id').delete((req,res) => {
 User.findByIdAndDelete(req.params.id)
