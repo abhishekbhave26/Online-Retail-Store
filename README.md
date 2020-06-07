@@ -4,9 +4,12 @@ Open two terminals one for backend folder and one for . folder.
 Run npm run server at both places
 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Inspired by -  
 
-Code Credits : https://github.com/beaucarnes/mern-exercise-tracker-mongodb
+https://github.com/beaucarnes/mern-exercise-tracker-mongodb
+
+https://medium.com/authpack/easy-github-auth-with-node-js-502d3d8f8e62
+
 
 ## Available Scripts
 
@@ -74,3 +77,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+

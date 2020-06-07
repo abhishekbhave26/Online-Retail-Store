@@ -10,13 +10,13 @@ router.route('/').get((req, res) => {
 
 // create a exercise log
 router.route('/add').post((req, res) => {
-  const username = req.body.username;
+  const email = req.body.email;
   const description = req.body.description;
   const duration = Number(req.body.duration);
   const date = Date.parse(req.body.date);
 
   const newExercise = new Exercise({
-    username,
+    email,
     description,
     duration,
     date,
@@ -46,7 +46,6 @@ router.route('/:id').delete((req,res) => {
 router.route('/update/:id').post((req,res) => {
   Exercise.findById(req.params.id)
   .then(exercise => {
-    exercise.username=req.body.username;
     exercise.description=req.body.description;
     exercise.duration=Number(req.body.duration);
     exercise.date=Date.parse(req.body.date);
@@ -59,8 +58,8 @@ router.route('/update/:id').post((req,res) => {
   .catch(err => res.status(400).json('Error'+err));
 });
 
-// returns list of exercises with given username
-router.route('/username/:id').get((req, res) => {
+// returns list of exercises with given user
+router.route('/user/:id').get((req, res) => {
   if(req.params.id=='-- ALL USERS --')
   {
     Exercise.find()
@@ -69,7 +68,7 @@ router.route('/username/:id').get((req, res) => {
   }
   else
   {
-    Exercise.find({username: req.params.id})
+    Exercise.find({email: req.params.id})
     .then(exercises =>res.json(exercises))
     .catch(err => res.status(400).json('Error'+err));
   }
