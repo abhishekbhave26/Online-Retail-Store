@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
-import Cookies from 'js-cookie';
 import "react-datepicker/dist/react-datepicker.css";
 
 export default class CreateExercise extends Component {
@@ -24,10 +23,7 @@ export default class CreateExercise extends Component {
   }
 
   componentDidMount() {
-    if(Cookies.get('user')===undefined){
-      window.location='/login'
-    }
-
+    
     axios.get('http://localhost:5000/users/')
       .then(response => {
         if (response.data.length > 0) {

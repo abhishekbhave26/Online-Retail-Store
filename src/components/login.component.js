@@ -3,6 +3,7 @@ import * as queryString from 'query-string';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import '../css/Login.css';
+import { Link } from 'react-router-dom';
 import { FacebookLoginButton, GithubLoginButton, MicrosoftLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 
 export default class Login extends Component {
@@ -118,7 +119,8 @@ export default class Login extends Component {
                             />
                         </div>
                         <div className="form-group">
-                            <a className="forgotPassword" href="#">Forgot your password ?</a>
+                            <Link to="/user" className="forgotPassword">Sign Up</Link> &nbsp; &nbsp;
+                            <Link to="#" className="forgotPassword">Forgot your password ?</Link>
                         </div>
                         <div className="form-group">
                             <input type="submit" value="Submit" className="btn btn-primary" /> &nbsp;
