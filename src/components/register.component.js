@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+var isValidated = require('../common/util').isValidated;
+
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -8,13 +10,15 @@ export default class Register extends Component {
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-    
+    this.onChangePassword2 = this.onChangePassword2.bind(this);
+
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      password2: ''
     }
   }
 
@@ -36,24 +40,36 @@ export default class Register extends Component {
     })
   }
 
+  onChangePassword2(e) {
+    this.setState({
+      password2: e.target.value
+    })
+  }
+
+  
+
   onSubmit(e) {
     e.preventDefault();
 
-    const user = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password
-    }
+    if(isValidated(this.state)){
+    
+      const user = {
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password
+      }
 
-    axios.post('http://localhost:5000/users/add', user)
-      .then(res => console.log(res.data));
+      axios.post('http://localhost:5000/users/add', user)
+        .then(res => console.log(res.data));
 
-    this.setState({
-      name: '',
-      email: '',
-      password: ''
-    })
+      this.setState({
+        name: '',
+        email: '',
+        password: ''
+      })
+    
     window.location = '/list';
+    }
   }
 
   render() {
@@ -84,6 +100,14 @@ export default class Register extends Component {
               className="form-control"
               value={this.state.password}
               onChange={this.onChangePassword}
+            />
+
+            <label>Enter Password Again: </label>
+            <input type="password"
+              required
+              className="form-control"
+              value={this.state.password2}
+              onChange={this.onChangePassword2}
             />
 
           </div>

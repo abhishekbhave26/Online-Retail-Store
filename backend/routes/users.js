@@ -30,7 +30,7 @@ router.route('/:id').get((req,res) => {
 
 // find a user by email id
 router.route('/email/:id').get((req,res) => {
-  User.find({email: req.params.id})
+  User.findOne({email: req.params.id})
   .then(user =>res.json(user))
   .catch(err => res.status(400).json('Error: '+err));
 });
@@ -46,7 +46,7 @@ User.findByIdAndDelete(req.params.id)
 
 // Update user
 router.route('/update/:id').post((req,res) => {
-User.findById(req.params.id)
+User.findOne({email: req.params.id})
 .then(user => {
   user.name=req.body.name;
   user.password= req.body.password;

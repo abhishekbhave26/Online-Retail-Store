@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import Dropdown from 'react-bootstrap/Dropdown'
 
 export default class Navbar extends Component {
 
@@ -87,9 +88,17 @@ export default class Navbar extends Component {
               }
 
               {(this.state.user !== 'temp' && this.state.user !== '') &&
-                <li className="navbar-item">
-                  <Link to="/login" onClick={this.logout} className="nav-link">Logout</Link>
-                </li>
+                <Dropdown>
+                <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                  Hi, {(this.state.user)}
+                </Dropdown.Toggle>
+              
+                <Dropdown.Menu>
+                  <Dropdown.Item href={"/user/"+this.state.user}>My Profile</Dropdown.Item>
+                  <Dropdown.Item href="/login" onClick={this.logout}>Log Out</Dropdown.Item>
+                  </Dropdown.Menu>
+              </Dropdown>
+                
               }
             </div>
 
