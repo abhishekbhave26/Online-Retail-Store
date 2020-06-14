@@ -48,11 +48,6 @@ export default class Login extends Component {
             password: this.state.password
         }
 
-        this.setState({
-            email: '',
-            password: ''
-        })
-
         axios.post('http://localhost:5000/authenticate/normal', user)
             .then(res => {
                 if (res.data === 'SUCCESS') {
@@ -60,7 +55,8 @@ export default class Login extends Component {
                     window.location = '/list';
                 }
                 else {
-                    window.location = '/login';
+                    alert("Please enter the correct password");
+                    //window.location = '/login';
                 }
             });
     }
@@ -98,7 +94,7 @@ export default class Login extends Component {
         return (
             <div className="LoginDiv">
                 <div className="LoginMain">
-                    <h3 style={{ textAlign: "center" }}>Login</h3>
+                    <h2 style={{ textAlign: "center" }}>Login</h2>
                     <br/>
                     <form onSubmit={this.onSubmit} onReset={this.onReset}>
                         <div className="form-group">

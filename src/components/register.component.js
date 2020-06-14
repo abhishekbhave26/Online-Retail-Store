@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Form from 'react-bootstrap/Form'
+import { Button, Col} from 'react-bootstrap';
+import '../css/Login.css';
 
 var isValidated = require('../common/util').isValidated;
 
@@ -13,6 +16,7 @@ export default class Register extends Component {
     this.onChangePassword2 = this.onChangePassword2.bind(this);
 
     this.onSubmit = this.onSubmit.bind(this);
+    this.onReset = this.onReset.bind(this);
 
     this.state = {
       name: '',
@@ -46,7 +50,17 @@ export default class Register extends Component {
     })
   }
 
-  
+  onReset(e){
+    e.preventDefault();
+
+    this.setState({
+      name: '',
+      email: '',
+      password: '',
+      password2: ''
+    })
+
+  }
 
   onSubmit(e) {
     e.preventDefault();
@@ -74,48 +88,49 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Create New User</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>Name: </label>
-            <input type="text"
-              required
-              className="form-control"
-              value={this.state.name}
-              onChange={this.onChangeName}
-            />
+        <div>
+        <h2 style={{ textAlign: "center" }}>Sign Up</h2>
+        <br />
+       
+        <Form> 
+            <Form.Row>
+                <Form.Group as={Col} controlId="formGridName">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control type="" placeholder="Name" required value={this.state.name} onChange={this.onChangeName} />
+                </Form.Group>
 
-            <label>Email Address: </label>
-            <input type="email"
-              required
-              className="form-control"
-              value={this.state.email}
-              onChange={this.onChangeEmail}
-            />
+                <Form.Group as={Col} controlId="formGridEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email" placeholder="Enter email" required value={this.state.email} readOnly={true} />
+                </Form.Group>
+                
+            </Form.Row>
 
-            <label>Password: </label>
-            <input type="password"
-              required
-              className="form-control"
-              value={this.state.password}
-              onChange={this.onChangePassword}
-            />
+            <Form.Row>
+                <Form.Group as={Col} controlId="formGridPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" placeholder="Password" required value={this.state.password} onChange={this.onChangePassword} />
+                </Form.Group>
 
-            <label>Enter Password Again: </label>
-            <input type="password"
-              required
-              className="form-control"
-              value={this.state.password2}
-              onChange={this.onChangePassword2}
-            />
+                <Form.Group as={Col} controlId="formGridPassword2">
+                    <Form.Label>Enter Password Again</Form.Label>
+                    <Form.Control type="password" placeholder="Password" required value={this.state.password2} onChange={this.onChangePassword2} />
+                </Form.Group>
 
-          </div>
-          <div className="form-group">
-            <input type="submit" value="Submit" className="btn btn-primary" />
-          </div>
-        </form>
-      </div>
+            </Form.Row>
+            
+            <div class="register">
+                <Button variant="primary" type="submit" onClick={this.onSubmit}>
+                    Submit
+                </Button>
+                &nbsp; &nbsp; &nbsp;
+                <Button variant="primary" type="reset" onClick={this.onReset}>
+                    Reset
+                </Button>
+            </div>
+        </Form>
+        </div>
+
     )
-  }
+}
 }
