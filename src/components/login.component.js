@@ -51,7 +51,9 @@ export default class Login extends Component {
         axios.post('http://localhost:5000/authenticate/normal', user)
             .then(res => {
                 if (res.data === 'SUCCESS') {
-                    Cookies.set('user', user.email, { expires: 10 })
+                    var expires = new Date();
+                    expires.setMinutes(expires.getMinutes() + 20)
+                    Cookies.set('user', user.email, { expires: expires })
                     window.location = '/list';
                 }
                 else {

@@ -101,7 +101,7 @@ export default class Register extends Component {
 
                 <Form.Group as={Col} controlId="formGridEmail">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" required value={this.state.email} readOnly={true} />
+                    <Form.Control type="email" placeholder="Enter email" required value={this.state.email} onChange={this.onChangeEmail} />
                 </Form.Group>
                 
             </Form.Row>

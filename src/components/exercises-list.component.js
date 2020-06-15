@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { FormControl, Form, Dropdown, Col } from 'react-bootstrap'
 
 const Exercise = props => (
   <tr>
     <td>{props.exercise.email}</td>
     <td>{props.exercise.description}</td>
     <td>{props.exercise.duration}</td>
-    <td>{props.exercise.date.substring(0,10)}</td>
+    <td>{props.exercise.date.substring(0, 10)}</td>
     <td>
-      <Link to={"/edit/"+props.exercise._id}>edit</Link> | <Link to={"#"} onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</Link>
+      <Link to={"/edit/" + props.exercise._id}>Edit</Link> | <Link to={"#"} onClick={() => { props.deleteExercise(props.exercise._id) }}>Delete</Link>
     </td>
   </tr>
 )
@@ -21,13 +22,13 @@ export default class ExercisesList extends Component {
     this.deleteExercise = this.deleteExercise.bind(this)
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-    
+
     this.state = {
       exercises: [],
       users: [],
       email: ''
     }
-}
+  }
 
   componentDidMount() {
 
@@ -39,7 +40,7 @@ export default class ExercisesList extends Component {
         console.log(error);
       })
 
-      
+
 
     axios.get('http://localhost:5000/users/')
       .then(response => {
@@ -53,7 +54,7 @@ export default class ExercisesList extends Component {
             email: newList[0].email,
           })
         }
-        
+
       })
       .catch((error) => {
         console.log(error);
@@ -61,23 +62,23 @@ export default class ExercisesList extends Component {
   }
 
   onChangeEmail(e) {
-    
+
     this.setState({
-      email: e.target.value
+      email: e.target.text
     })
-    axios.get('http://localhost:5000/exercises/user/'+e.target.value)
-    .then(response => {
-      this.setState({ exercises: response.data})
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-    
-}
+    axios.get('http://localhost:5000/exercises/user/' + e.target.text)
+      .then(response => {
+        this.setState({ exercises: response.data })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
+  }
 
   deleteExercise(id) {
-    axios.delete('http://localhost:5000/exercises/'+id)
-      .then(response => { console.log(response.data)});
+    axios.delete('http://localhost:5000/exercises/' + id)
+      .then(response => { console.log(response.data) });
 
     this.setState({
       exercises: this.state.exercises.filter(el => el._id !== id)
@@ -86,11 +87,11 @@ export default class ExercisesList extends Component {
 
   exerciseList() {
     return this.state.exercises.map(currentexercise => {
-      return <Exercise exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id}/>;
+      return <Exercise exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
     })
   }
 
-  handleSearch(e)  {
+  handleSearch(e) {
     this.setState({
       exercises: this.state.exercises.filter(exer => exer.description.includes(e.target.value))
     })
@@ -100,35 +101,40 @@ export default class ExercisesList extends Component {
   render() {
     return (
       <div>
-        <h3>Logged Exercises</h3>
-        
-        <div className="form-group"> 
-          <label>Filter by User: </label>
-          <select ref="userInput"
-              required
-              className="form-control"
-              value={this.state.email}
-              onChange={this.onChangeEmail}>
-              {
-                this.state.users.map(function(user) {
-                  return <option 
-                    key={user}
-                    value={user}>{user}
-                    </option>;
-                })
-              }
-          </select>
-        </div>
+        <h2 style={{ textAlign: "center" }}>Logged Exercises</h2>
+        <br />
 
-        <div className="input-group">
-        <input
-            type="text"
-            value={this.state.search}
-            onChange={this.handleSearch}
-            className="form-control"
-          />
-        </div>
-        <br/>
+        <Form>
+          <Form.Row>
+            <Form.Group as={Col} controlId="formGridName">
+              <Dropdown>
+                <Dropdown.Toggle variant="secondary" id="dropdown-basic" size="lg">
+                  {this.state.email}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  {
+                    this.state.users.map(user => (
+                      <Dropdown.Item key={user} value={user} onClick={this.onChangeEmail}>{user}</Dropdown.Item>
+                    ))
+                  }
+                </Dropdown.Menu>
+              </Dropdown>
+
+
+            </Form.Group>
+
+
+
+            <Form.Group as={Col} controlId="formGridName">
+              <FormControl type="text" placeholder="Search" className="mr-sm-2" value={this.state.search} onChange={this.handleSearch} />
+            </Form.Group>
+          </Form.Row>
+
+        </Form>
+
+
+        <br />
         <table className="table">
           <thead className="thead-light">
             <tr>
@@ -140,7 +146,7 @@ export default class ExercisesList extends Component {
             </tr>
           </thead>
           <tbody>
-            { this.exerciseList() }
+            {this.exerciseList()}
           </tbody>
         </table>
       </div>
