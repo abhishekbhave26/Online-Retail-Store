@@ -119,7 +119,7 @@ export default class Register extends Component {
 
             </Form.Row>
             
-            <div class="register">
+            <div className="register">
                 <Button variant="primary" type="submit" onClick={this.onSubmit}>
                     Submit
                 </Button>

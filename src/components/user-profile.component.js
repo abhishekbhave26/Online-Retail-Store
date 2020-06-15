@@ -5,6 +5,7 @@ import { Button, Col } from 'react-bootstrap';
 import '../css/Login.css';
 
 var isValidated = require('../common/util').isValidated;
+var isNumbered = require('../common/util').isNumbered;
 
 export default class UserProfile extends Component {
     constructor(props) {
@@ -13,6 +14,14 @@ export default class UserProfile extends Component {
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.onChangePassword2 = this.onChangePassword2.bind(this);
+        this.onChangeAddress = this.onChangeAddress.bind(this);
+        this.onChangeAddress2 = this.onChangeAddress2.bind(this);
+        this.onChangeCity_State = this.onChangeCity_State.bind(this);
+        this.onChangeZip = this.onChangeZip.bind(this);
+        this.onChangeAge = this.onChangeAge.bind(this);
+        this.onChangeWeight = this.onChangeWeight.bind(this);
+        this.onChangeHeight = this.onChangeHeight.bind(this);
+
 
         this.onSubmit = this.onSubmit.bind(this);
         this.onReset = this.onReset.bind(this);
@@ -21,7 +30,14 @@ export default class UserProfile extends Component {
             name: '',
             email: '',
             password: '',
-            password2: ''
+            password2: '',
+            address: '',
+            address2: '',
+            city_state: '',
+            zip: '',
+            age:'',
+            weight: '',
+            height: ''
         }
     }
 
@@ -33,6 +49,13 @@ export default class UserProfile extends Component {
                     name: response.data.name,
                     email: response.data.email,
                     password: response.data.password,
+                    address: response.data.address || '',
+                    address2: response.data.address2 || '',
+                    city_state: response.data.city_state || '',
+                    zip: response.data.zip || '',
+                    age: response.data.age || '',
+                    height: response.data.height || '',
+                    weight: response.data.weight|| ''
                 })
             })
             .catch(function (error) {
@@ -59,16 +82,65 @@ export default class UserProfile extends Component {
         })
     }
 
+    onChangeAddress(e) {
+        this.setState({
+            address: e.target.value
+        })
+    }
+
+    onChangeAddress2(e) {
+        this.setState({
+            address2: e.target.value
+        })
+    }
+
+    onChangeCity_State(e) {
+        this.setState({
+            city_state: e.target.value
+        })
+    }
+
+    onChangeZip(e) {
+        this.setState({
+            zip: e.target.value
+        })
+    }
+
+    onChangeAge(e) {
+        this.setState({
+            age: e.target.value
+        })
+    }
+
+    onChangeWeight(e) {
+        this.setState({
+            weight: e.target.value
+        })
+    }
+
+    onChangeHeight(e) {
+        this.setState({
+            height: e.target.value
+        })
+    }
+
 
     onSubmit(e) {
         e.preventDefault();
 
-        if (isValidated(this.state)) {
+        if (isValidated(this.state) && isNumbered(this.state)) {
 
             const user = {
                 name: this.state.name,
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
+                address: this.state.address,
+                address2: this.state.address2,
+                city_state: this.state.city_state,
+                zip: this.state.zip,
+                age: this.state.age,
+                height: this.state.height,
+                weight: this.state.weight
             }
 
             axios.post('http://localhost:5000/users/update/' + this.props.match.params.userID, user)
@@ -90,7 +162,14 @@ export default class UserProfile extends Component {
             name: '',
             email: '',
             password: '',
-            password2: ''
+            password2: '',
+            address: '',
+            address2: '',
+            city_state: '',
+            zip: '',
+            age: '',
+            height: '',
+            weight: ''
         })
     }
 
@@ -128,37 +207,49 @@ export default class UserProfile extends Component {
 
                     </Form.Row>
 
-                    <Form.Group controlId="formGridAddress1">
+                    <Form.Row>
+                    <Form.Group as={Col} controlId="formGridAddress1">
                         <Form.Label>Address</Form.Label>
-                        <Form.Control placeholder="1234 Main St" />
+                        <Form.Control placeholder="1234 Main St" value={this.state.address} onChange={this.onChangeAddress}/>
                     </Form.Group>
 
-                    <Form.Group controlId="formGridAddress2">
+                    <Form.Group as={Col} controlId="formGridAddress2">
                         <Form.Label>Address 2</Form.Label>
-                        <Form.Control placeholder="Apartment, studio, or floor" />
+                        <Form.Control placeholder="Apartment, studio, or floor" value={this.state.address2} onChange={this.onChangeAddress2} />
                     </Form.Group>
+                    </Form.Row>
 
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridCity">
-                            <Form.Label>City</Form.Label>
-                            <Form.Control />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridState">
-                            <Form.Label>State</Form.Label>
-                            <Form.Control as="select" defaultValue="Choose...">
-                                <option>Choose...</option>
-                                <option>...</option>
-                            </Form.Control>
+                            <Form.Label>City, State</Form.Label>
+                            <Form.Control value={this.state.city_state} onChange={this.onChangeCity_State}/>
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridZip">
                             <Form.Label>Zip</Form.Label>
-                            <Form.Control />
+                            <Form.Control value={this.state.zip} onChange={this.onChangeZip}/>
                         </Form.Group>
                     </Form.Row>
 
-                    <div class="register">
+                    <Form.Row>
+                        <Form.Group as={Col} controlId="formGridAge">
+                            <Form.Label>Age (in years)</Form.Label>
+                            <Form.Control value={this.state.age} onChange={this.onChangeAge}/>
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="formGridHeight">
+                            <Form.Label>Height (in cms)</Form.Label>
+                            <Form.Control value={this.state.height} onChange={this.onChangeHeight}/>
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="formGridWeight">
+                            <Form.Label>Weight (in kgs)</Form.Label>
+                            <Form.Control value={this.state.weight} onChange={this.onChangeWeight}/>
+                        </Form.Group>
+
+                    </Form.Row>
+
+                    <div className="register">
                         <Button variant="primary" type="submit" onClick={this.onSubmit}>
                             Submit
                         </Button>

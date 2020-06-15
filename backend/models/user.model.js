@@ -17,7 +17,15 @@ const userSchema= new Schema({
         type:String,
         required:true,
         minlength:8
-    }
+    },
+    address:{type:String},
+    address2:{type:String},
+    city_state:{type:String},
+    zip:{type:Number},
+    age:{type:Number},
+    height:{type:Number},
+    weight:{type:Number}
+
 },{
     timestamps:true,
 

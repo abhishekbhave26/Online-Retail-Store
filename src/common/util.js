@@ -12,3 +12,33 @@ var isValidated = function(state){
 }
 
 exports.isValidated = isValidated;
+
+
+var isNumbered = function(state){
+    
+    var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(state.zip);
+    if(state.zip !=='' && !isValidZip){
+        alert("Please enter correct zip code");
+        return false;
+    }
+
+    if(isNaN(state.age)){
+      alert("Please enter age as a number");
+      return false;
+    }
+
+    if(isNaN(state.weight)){
+        alert("Please enter weight as a number");
+        return false;
+    }
+
+    if(isNaN(state.height)){
+        alert("Please enter height as a number");
+        return false;
+    }
+    
+
+    return true;
+}
+
+exports.isNumbered = isNumbered;

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
-import { Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { Nav, NavDropdown, Navbar, Link } from 'react-bootstrap';
+import {  NavLink } from 'react-router-dom';
+
 
 export default class NavBar extends Component {
 
@@ -13,8 +15,7 @@ export default class NavBar extends Component {
     this.create = this.create.bind(this);
     this.contact = this.contact.bind(this);
     this.login = this.login.bind(this);
-    this.register = this.register.bind(this);
-
+  
     this.state = {
       user: ''
     }
@@ -48,21 +49,18 @@ export default class NavBar extends Component {
     window.location = '/login'
   }
 
-  register(e){
-    window.location = '/user'
-  }
-
-
+  
   componentDidMount() {
 
     if (Cookies.get('user') === undefined) {
       var expires = new Date();
       expires.setMinutes(expires.getMinutes() + 5)
       Cookies.set('user', 'temp', { expires: expires, path: '/login' })
-      Cookies.set('user', 'temp', { expires: expires, path: '/user' })
       window.location = '/login'
     }
-    this.setState({
+    
+    
+    this.setState({ 
       user: Cookies.get('user')
     })
 
@@ -82,8 +80,8 @@ export default class NavBar extends Component {
           <Nav>
             {(this.state.user === '' || this.state.user === 'temp') &&
                 <Nav className="mr-auto">
-                <Nav.Link onClick={this.register}>Sign Up</Nav.Link>
-                <Nav.Link onClick={this.login}>Login</Nav.Link>
+                <Nav.Link as={NavLink} to='/user' exact>Sign Up</Nav.Link>
+                <Nav.Link as={NavLink} to='/login' exact>Login</Nav.Link>
                 </Nav>
             }
             {(this.state.user !== 'temp' && this.state.user !== '') &&
