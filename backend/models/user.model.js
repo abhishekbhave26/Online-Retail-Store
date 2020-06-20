@@ -24,7 +24,9 @@ const userSchema= new Schema({
     zip:{type:Number},
     age:{type:Number},
     height:{type:Number},
-    weight:{type:Number}
+    weight:{type:Number},
+    isVerified:{type:Boolean},
+    otp:{type:Number}
 
 },{
     timestamps:true,

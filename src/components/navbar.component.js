@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
-import { Nav, NavDropdown, Navbar, Link } from 'react-bootstrap';
+import { Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import {  NavLink } from 'react-router-dom';
 
 
@@ -54,7 +54,7 @@ export default class NavBar extends Component {
 
     if (Cookies.get('user') === undefined) {
       var expires = new Date();
-      expires.setMinutes(expires.getMinutes() + 5)
+      expires.setMinutes(expires.getMinutes() + 15)
       Cookies.set('user', 'temp', { expires: expires, path: '/login' })
       window.location = '/login'
     }

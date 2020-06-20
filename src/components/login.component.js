@@ -56,9 +56,11 @@ export default class Login extends Component {
                     Cookies.set('user', user.email, { expires: expires })
                     window.location = '/list';
                 }
+                else if (res.data === 'User does not exist') {
+                    alert("User with this email id does not exist. Please use one which exists or create a new account");
+                }
                 else {
                     alert("Please enter the correct password");
-                    //window.location = '/login';
                 }
             });
     }
