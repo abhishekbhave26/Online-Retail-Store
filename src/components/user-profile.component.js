@@ -35,9 +35,10 @@ export default class UserProfile extends Component {
             address2: '',
             city_state: '',
             zip: '',
-            age:'',
+            age: '',
             weight: '',
-            height: ''
+            height: '',
+            isVerified: ''
         }
     }
 
@@ -55,7 +56,8 @@ export default class UserProfile extends Component {
                     zip: response.data.zip || '',
                     age: response.data.age || '',
                     height: response.data.height || '',
-                    weight: response.data.weight|| ''
+                    weight: response.data.weight || '',
+                    isVerified: response.data.isVerified
                 })
             })
             .catch(function (error) {
@@ -177,6 +179,11 @@ export default class UserProfile extends Component {
     render() {
         return (
             <div >
+                {(this.state.isVerified === false) &&
+
+                    <p style={{ textAlign: "center" }} >Please verify your email by entering your OTP &nbsp;<a href={"/user/opt/"+this.state.email}>here.</a> </p>
+
+                }
                 <h2 style={{ textAlign: "center" }}>Update your profile</h2>
                 <br />
 
@@ -208,43 +215,43 @@ export default class UserProfile extends Component {
                     </Form.Row>
 
                     <Form.Row>
-                    <Form.Group as={Col} controlId="formGridAddress1">
-                        <Form.Label>Address</Form.Label>
-                        <Form.Control placeholder="1234 Main St" value={this.state.address} onChange={this.onChangeAddress}/>
-                    </Form.Group>
+                        <Form.Group as={Col} controlId="formGridAddress1">
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control placeholder="1234 Main St" value={this.state.address} onChange={this.onChangeAddress} />
+                        </Form.Group>
 
-                    <Form.Group as={Col} controlId="formGridAddress2">
-                        <Form.Label>Address 2</Form.Label>
-                        <Form.Control placeholder="Apartment, studio, or floor" value={this.state.address2} onChange={this.onChangeAddress2} />
-                    </Form.Group>
+                        <Form.Group as={Col} controlId="formGridAddress2">
+                            <Form.Label>Address 2</Form.Label>
+                            <Form.Control placeholder="Apartment, studio, or floor" value={this.state.address2} onChange={this.onChangeAddress2} />
+                        </Form.Group>
                     </Form.Row>
 
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridCity">
                             <Form.Label>City, State</Form.Label>
-                            <Form.Control value={this.state.city_state} onChange={this.onChangeCity_State}/>
+                            <Form.Control value={this.state.city_state} onChange={this.onChangeCity_State} />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridZip">
                             <Form.Label>Zip</Form.Label>
-                            <Form.Control value={this.state.zip} onChange={this.onChangeZip}/>
+                            <Form.Control value={this.state.zip} onChange={this.onChangeZip} />
                         </Form.Group>
                     </Form.Row>
 
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridAge">
                             <Form.Label>Age (in years)</Form.Label>
-                            <Form.Control value={this.state.age} onChange={this.onChangeAge}/>
+                            <Form.Control value={this.state.age} onChange={this.onChangeAge} />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridHeight">
                             <Form.Label>Height (in cms)</Form.Label>
-                            <Form.Control value={this.state.height} onChange={this.onChangeHeight}/>
+                            <Form.Control value={this.state.height} onChange={this.onChangeHeight} />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridWeight">
                             <Form.Label>Weight (in kgs)</Form.Label>
-                            <Form.Control value={this.state.weight} onChange={this.onChangeWeight}/>
+                            <Form.Control value={this.state.weight} onChange={this.onChangeWeight} />
                         </Form.Group>
 
                     </Form.Row>

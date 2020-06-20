@@ -11,6 +11,7 @@ import ContactUs from "./components/contact-us.component";
 import Home from "./components/home.component";
 import Login from "./components/login.component";
 import UserProfile from "./components/user-profile.component";
+import OTP from "./components/otp.component";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <Route path="/contact" exact component={ContactUs} />
       <Route path="/list" exact component={ExercisesList} />
       <Route path="/user/:userID" exact component={UserProfile} />
+      <Route path="/user/opt/:userID" exact component={OTP} />
       
       </div>
     </Router>
