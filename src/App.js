@@ -12,6 +12,7 @@ import Home from "./components/home.component";
 import Login from "./components/login.component";
 import UserProfile from "./components/user-profile.component";
 import OTP from "./components/otp.component";
+import ForgotPassword from './components/forgot-password.component';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Route path="/list" exact component={ExercisesList} />
       <Route path="/user/:userID" exact component={UserProfile} />
       <Route path="/user/opt/:userID" exact component={OTP} />
+      <Route path="/password" exact component={ForgotPassword} />
       
       </div>
     </Router>

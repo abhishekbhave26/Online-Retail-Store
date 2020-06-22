@@ -114,6 +114,20 @@ router.route('/update/:id').post((req, res) => {
 });
 
 
+//Update password
+router.route('/update/password/:id').post((req, res) => {
+  User.findOne({ email: req.params.id })
+    .then(user => {
+      user.password = req.body.password;
+
+      user.save()
+        .then(() => res.json('Password updated'))
+        .catch(err => res.status(400).json('Error: ' + err));
+
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 
 // OTP verification
 router.route('/otp/:id').post((req, res) => {
@@ -138,7 +152,6 @@ router.route('/otp/:id').post((req, res) => {
 router.route('/otp/user/:id').post((req, res) => {
   User.findOne({ email: req.params.id })
     .then(user => {
-      user.isVerified = false;
       user.otp = generateOTP();
 
       user.save()

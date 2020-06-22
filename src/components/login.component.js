@@ -119,8 +119,8 @@ export default class Login extends Component {
                             />
                         </div>
                         <div className="form-group">
-                            <Link to="/user" className="forgotPassword">Sign Up</Link> &nbsp; &nbsp;
-                            <Link to="#" className="forgotPassword">Forgot your password ?</Link>
+                            <Link to="/user" className="signUp">Sign Up</Link> &nbsp; &nbsp;
+                            <Link to="/password" className="forgotPassword">Forgot your password ?</Link>
                         </div>
                         <div className="form-group">
                             <input type="submit" value="Submit" className="btn btn-primary" /> &nbsp;
