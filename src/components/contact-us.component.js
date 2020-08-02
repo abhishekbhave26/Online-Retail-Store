@@ -56,8 +56,8 @@ export default class ContactUs extends Component {
 
   render() {
     return (
-    <div>
-      <h3>Submit Contact Request</h3>
+      <div className="container">
+      <h3 style={{ textAlign: "center" }}>Submit Contact Request</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
           <label>Name: </label>

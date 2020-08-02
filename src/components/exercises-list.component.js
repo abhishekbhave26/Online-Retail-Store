@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FormControl, Form, Dropdown, Col } from 'react-bootstrap'
+import { FormControl, Form, Dropdown, Col } from 'react-bootstrap';
+import '../css/Login.css';
 
 const Exercise = props => (
   <tr>
@@ -103,12 +104,12 @@ export default class ExercisesList extends Component {
       <div>
         <h2 style={{ textAlign: "center" }}>Logged Exercises</h2>
         <br />
-
+      <div className="container">
         <Form>
           <Form.Row>
             <Form.Group as={Col} controlId="formGridName">
               <Dropdown>
-                <Dropdown.Toggle variant="secondary" id="dropdown-basic" size="lg">
+                <Dropdown.Toggle variant="secondary" id="dropdown-basic" size="md">
                   {this.state.email}
                 </Dropdown.Toggle>
 
@@ -120,11 +121,7 @@ export default class ExercisesList extends Component {
                   }
                 </Dropdown.Menu>
               </Dropdown>
-
-
             </Form.Group>
-
-
 
             <Form.Group as={Col} controlId="formGridName">
               <FormControl type="text" placeholder="Search" className="mr-sm-2" value={this.state.search} onChange={this.handleSearch} />
@@ -133,7 +130,7 @@ export default class ExercisesList extends Component {
 
         </Form>
 
-
+    
         <br />
         <table className="table">
           <thead className="thead-light">
@@ -149,6 +146,7 @@ export default class ExercisesList extends Component {
             {this.exerciseList()}
           </tbody>
         </table>
+        </div>
       </div>
     )
   }

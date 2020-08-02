@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form'
 import { Button, Col } from 'react-bootstrap';
 import '../css/Login.css';
 
-var isValidated = require('../common/util').isValidated;
+var isProfileValidated = require('../common/util').isProfileValidated;
 
 export default class ForgotPassword extends Component {
     constructor(props) {
@@ -131,7 +131,7 @@ export default class ForgotPassword extends Component {
     onFinalSubmit(e){
         e.preventDefault();
 
-        if (isValidated(this.state)) {
+        if (isProfileValidated(this.state)) {
             const user = {
                 email: this.state.email,
                 password: this.state.password

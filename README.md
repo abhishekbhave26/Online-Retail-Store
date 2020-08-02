@@ -6,10 +6,10 @@ I have also used a Twilio Send-Grid Api service to send emails for various purpo
 
 To run :
 
-npm run server for running both backend and frontend.
+npm start for running both backend and frontend.
 
 Open two terminals one for backend folder and one for . folder.
-Run npm run server at both places
+Run npm start at both places
 
 
 Inspired by -  

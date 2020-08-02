@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form'
 import { Button, Col } from 'react-bootstrap';
 import '../css/Login.css';
 
-var isValidated = require('../common/util').isValidated;
+var isProfileValidated = require('../common/util').isProfileValidated;
 var isNumbered = require('../common/util').isNumbered;
 
 export default class UserProfile extends Component {
@@ -130,7 +130,7 @@ export default class UserProfile extends Component {
     onSubmit(e) {
         e.preventDefault();
 
-        if (isValidated(this.state) && isNumbered(this.state)) {
+        if (isProfileValidated(this.state) && isNumbered(this.state)) {
 
             const user = {
                 name: this.state.name,
@@ -178,7 +178,7 @@ export default class UserProfile extends Component {
 
     render() {
         return (
-            <div >
+            <div className="container">
                 {(this.state.isVerified === false) &&
 
                     <p style={{ textAlign: "center" }} >Please verify your email by entering your OTP &nbsp;<a href={"/user/opt/"+this.state.email}>here.</a> </p>

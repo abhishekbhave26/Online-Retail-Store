@@ -5,8 +5,8 @@ export default class Home extends Component {
 
     render() {
         return (
-            <div>
-                <h2> Welcome to Home Page</h2>
+            <div className="container">
+                <h2 style={{ textAlign: "center" }}> Welcome to Home Page</h2>
             </div>
         )
     }

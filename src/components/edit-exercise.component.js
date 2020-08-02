@@ -3,6 +3,8 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
+var isExerciseValidated = require('../common/util').isExerciseValidated;
+
 export default class EditExercise extends Component {
   constructor(props) {
     super(props);
@@ -78,6 +80,7 @@ export default class EditExercise extends Component {
   onSubmit(e) {
     e.preventDefault();
 
+    if (isExerciseValidated(this.state)){
     const exercise = {
       email: this.state.email,
       description: this.state.description,
@@ -90,11 +93,12 @@ export default class EditExercise extends Component {
 
     window.location = '/list';
   }
+  }
 
   render() {
     return (
-    <div>
-      <h3>Edit Exercise Log</h3>
+    <div className="container">
+      <h3 style={{ textAlign: "center" }}>Edit Exercise Log</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
           <label>User: </label>
@@ -127,6 +131,7 @@ export default class EditExercise extends Component {
           <input 
               type="text" 
               className="form-control"
+              required
               value={this.state.duration}
               onChange={this.onChangeDuration}
               />
@@ -135,6 +140,7 @@ export default class EditExercise extends Component {
           <label>Date: </label>
           <div>
             <DatePicker
+            required
               selected={this.state.date}
               onChange={this.onChangeDate}
               maxDate={new Date()}

@@ -1,4 +1,4 @@
-var isValidated = function(state){
+var isProfileValidated = function(state){
     
     if (state.password !== state.password2) {
         alert("The passwords you entered do not match");
@@ -11,7 +11,7 @@ var isValidated = function(state){
     return true;
 }
 
-exports.isValidated = isValidated;
+exports.isProfileValidated = isProfileValidated;
 
 
 var isNumbered = function(state){
@@ -42,3 +42,19 @@ var isNumbered = function(state){
 }
 
 exports.isNumbered = isNumbered;
+
+
+var isExerciseValidated = function(state){
+    
+    if(isNaN(state.duration)){
+        alert("Please enter duration as a number");
+        return false;
+    }
+    if (state.description.length < 10){
+        alert("The description you entered is less than 10 charcters. Please try again");
+        return false;
+    }
+    return true;
+}
+
+exports.isExerciseValidated = isExerciseValidated;

@@ -17,7 +17,7 @@ import ForgotPassword from './components/forgot-password.component';
 function App() {
   return (
     <Router>
-      <div className="container">
+      <div className="base-container">
       <NavBar />
       <br />
       <Route path="/" exact component={Home} />

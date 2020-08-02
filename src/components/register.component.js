@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form'
 import { Button, Col } from 'react-bootstrap';
 import '../css/Login.css';
 
-var isValidated = require('../common/util').isValidated;
+var isProfileValidated = require('../common/util').isProfileValidated;
 
 export default class Register extends Component {
   constructor(props) {
@@ -65,7 +65,7 @@ export default class Register extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    if (isValidated(this.state)) {
+    if (isProfileValidated(this.state)) {
 
       const user = {
         name: this.state.name,
@@ -104,7 +104,7 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h2 style={{ textAlign: "center" }}>Sign Up</h2>
         <br />
 
