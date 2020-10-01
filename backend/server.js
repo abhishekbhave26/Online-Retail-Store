@@ -10,18 +10,9 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-var uri;
-console.log("NODE ENV is" ,process.env.NODE_ENV);
-if(process.env.NODE_ENV.toString() == 'dev'){
-  uri = process.env.ATLAS_URI_DEV;
-  console.log("Uri is", uri);
-}
-else{
-  uri = process.env.ATLAS_URI_TEST;
-  console.log("Uri is", uri);
-}
+const uriConnStr = process.env.ATLAS_URI;
 
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
+mongoose.connect(uriConnStr, { useNewUrlParser: true, useCreateIndex: true }
 );
 const connection = mongoose.connection;
 
