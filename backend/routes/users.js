@@ -10,9 +10,9 @@ async function sendEmail(email, otp) {
   const msg = {
     to: email,
     from: 'abhave@buffalo.edu',
-    subject: 'Thank you for registering with Execrise Tracker',
-    text: 'Thank you for registering with Execrise Tracker',
-    html: '<br/><strong> Your OTP for exercise tracker is  ' + otp + '</strong>',
+    subject: 'Thank you for registering with Online Retail Store',
+    text: 'Thank you for registering with Online Retail Store',
+    html: '<br/><strong> Your OTP for online retail store is  ' + otp + '</strong>',
   };
   await sgMail.send(msg).then(() => {
     console.log('Message sent')

@@ -3,23 +3,29 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-var isExerciseValidated = require('../common/util').isExerciseValidated;
+var isProductValidated = require('../common/util').isProductValidated;
 
-export default class CreateExercise extends Component {
+export default class CreateProduct extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeDuration = this.onChangeDuration.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangePrice = this.onChangePrice.bind(this);
+    this.onChangeCategory = this.onChangeCategory.bind(this);
+    this.onChangeWeight = this.onChangeWeight.bind(this);
+    this.onChangeProductID = this.onChangeProductID.bind(this);
+    this.onChangeInStock = this.onChangeInStock.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      email: '',
+      name: '',
       description: '',
-      duration: 0,
-      date: new Date(),
+      price: 0,
+      category: '',
+      weight: 0,
+      productID: 0,
+      inStock: true,
       users: []
     }
   }
@@ -41,9 +47,9 @@ export default class CreateExercise extends Component {
 
   }
 
-  onChangeEmail(e) {
+  onChangeName(e) {
     this.setState({
-      email: e.target.value
+      name: e.target.value
     })
   }
 
@@ -53,30 +59,51 @@ export default class CreateExercise extends Component {
     })
   }
 
-  onChangeDuration(e) {
+  onChangePrice(e) {
     this.setState({
-      duration: e.target.value
+      price: e.target.value
     })
   }
 
-  onChangeDate(date) {
+  onChangeCategory(e) {
     this.setState({
-      date: date
+      category: e.target.value
+    })
+  }
+
+  onChangeWeight(e) {
+    this.setState({
+      weight: e.target.value
+    })
+  }
+
+  onChangeProductID(e) {
+    this.setState({
+      productID: e.target.value
+    })
+  }
+
+  onChangeInStock(e) {
+    this.setState({
+      inStock: e.target.value
     })
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    if (isExerciseValidated(this.state)){
-    const exercise = {
-      email: this.state.email,
+    if (isProductValidated(this.state)){
+    const product = {
+      name: this.state.name,
       description: this.state.description,
-      duration: this.state.duration,
-      date: this.state.date
+      price: this.state.price,
+      category: this.state.category,
+      weigth: this.state.weigth,
+      productID: this.state.productID,
+      inStock: this.state.inStock,
     }
 
-    axios.post('http://localhost:5000/exercises/add', exercise)
+    axios.post('http://localhost:5000/products/add', product)
       .then(res => console.log(res.data));
 
     window.location = '/list';
@@ -86,15 +113,15 @@ export default class CreateExercise extends Component {
   render() {
     return (
       <div className="container">
-      <h3 style={{ textAlign: "center" }}>Create New Exercise Log</h3>
+      <h3 style={{ textAlign: "center" }}>Add New Product</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
           <label>User: </label>
           <select ref="userInput"
               required
               className="form-control"
-              value={this.state.email}
-              onChange={this.onChangeEmail}>
+              value={this.state.name}
+              onChange={this.onChangeName}>
               {
                 this.state.users.map(function(user) {
                   return <option 
@@ -115,28 +142,28 @@ export default class CreateExercise extends Component {
               />
         </div>
         <div className="form-group">
-          <label>Duration (in minutes): </label>
+          <label>Price (in dollars): </label>
           <input 
               type="text" 
               className="form-control"
               required
-              value={this.state.duration}
-              onChange={this.onChangeDuration}
+              value={this.state.price}
+              onChange={this.onChangePrice}
               />
         </div>
         <div className="form-group">
-          <label>Date: </label>
-          <div>
-            <DatePicker
+          <label>Weight: </label>
+          <input 
+              type="text" 
+              className="form-control"
               required
-              selected={this.state.date}
-              onChange={this.onChangeDate}
-            />
-          </div>
+              value={this.state.weight}
+              onChange={this.onChangeWeight}
+              />
         </div>
 
         <div className="form-group">
-          <input type="submit" value="Create Exercise Log" className="btn btn-primary" />
+          <input type="submit" value="Add Product" className="btn btn-primary" />
         </div>
       </form>
     </div>

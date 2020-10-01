@@ -3,9 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 
 import NavBar from "./components/navbar.component";
-import ExercisesList from "./components/exercises-list.component";
-import EditExercise from "./components/edit-exercise.component";
-import CreateExercise from "./components/create-exercise.component";
+import ProductsList from "./components/products-list.component";
+import EditProduct from "./components/edit-product.component";
+import CreateProduct from "./components/create-product.component";
 import Register from "./components/register.component";
 import ContactUs from "./components/contact-us.component";
 import Home from "./components/home.component";
@@ -22,11 +22,11 @@ function App() {
       <br />
       <Route path="/" exact component={Home} />
       <Route path="/login" exact component={Login} />
-      <Route path="/edit/:id" exact component={EditExercise} />
-      <Route path="/create" exact component={CreateExercise} />
+      <Route path="/edit/:id" exact component={EditProduct} />
+      <Route path="/create" exact component={CreateProduct} />
       <Route path="/user" exact component={Register} />
       <Route path="/contact" exact component={ContactUs} />
-      <Route path="/list" exact component={ExercisesList} />
+      <Route path="/list" exact component={ProductsList} />
       <Route path="/user/:userID" exact component={UserProfile} />
       <Route path="/user/opt/:userID" exact component={OTP} />
       <Route path="/password" exact component={ForgotPassword} />
