@@ -22,12 +22,12 @@ connection.once('open', () => {
 })
 
 const authenticateRouter = require('./routes/authenticate');
-const exercisesRouter = require('./routes/exercises');
+const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 const contactRouter = require('./routes/contact');
 
 app.use('/authenticate',authenticateRouter);
-app.use('/exercises', exercisesRouter);
+app.use('/products', productsRouter);
 app.use('/users', usersRouter);
 app.use('/contact', contactRouter);
 

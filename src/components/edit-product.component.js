@@ -3,9 +3,9 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-var isExerciseValidated = require('../common/util').isExerciseValidated;
+var isProductValidated = require('../common/util').isProductValidated;
 
-export default class EditExercise extends Component {
+export default class EditProduct extends Component {
   constructor(props) {
     super(props);
 
@@ -26,7 +26,7 @@ export default class EditExercise extends Component {
 
   componentDidMount() {
 
-    axios.get('http://localhost:5000/exercises/'+this.props.match.params.id)
+    axios.get('http://localhost:5000/products/'+this.props.match.params.id)
       .then(response => {
         this.setState({
           email: response.data.email,
@@ -80,15 +80,15 @@ export default class EditExercise extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    if (isExerciseValidated(this.state)){
-    const exercise = {
+    if (isProductValidated(this.state)){
+    const product = {
       email: this.state.email,
       description: this.state.description,
       duration: this.state.duration,
       date: this.state.date
     }
 
-    axios.post('http://localhost:5000/exercises/update/' + this.props.match.params.id, exercise)
+    axios.post('http://localhost:5000/products/update/' + this.props.match.params.id, product)
       .then(res => console.log(res.data));
 
     window.location = '/list';
@@ -98,7 +98,7 @@ export default class EditExercise extends Component {
   render() {
     return (
     <div className="container">
-      <h3 style={{ textAlign: "center" }}>Edit Exercise Log</h3>
+      <h3 style={{ textAlign: "center" }}>Edit Product Log</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
           <label>User: </label>

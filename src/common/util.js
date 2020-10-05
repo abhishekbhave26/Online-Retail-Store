@@ -44,17 +44,13 @@ var isNumbered = function(state){
 exports.isNumbered = isNumbered;
 
 
-var isExerciseValidated = function(state){
+var isProductValidated = function(state){
     
-    if(isNaN(state.duration)){
-        alert("Please enter duration as a number");
-        return false;
-    }
-    if (state.description.length < 10){
-        alert("The description you entered is less than 10 charcters. Please try again");
+    if(isNaN(state.price)){
+        alert("Please enter price as a number");
         return false;
     }
     return true;
 }
 
-exports.isExerciseValidated = isExerciseValidated;
+exports.isProductValidated = isProductValidated;

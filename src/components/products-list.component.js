@@ -4,28 +4,28 @@ import axios from 'axios';
 import { FormControl, Form, Dropdown, Col } from 'react-bootstrap';
 import '../css/Login.css';
 
-const Exercise = props => (
+const Product = props => (
   <tr>
-    <td>{props.exercise.email}</td>
-    <td>{props.exercise.description}</td>
-    <td>{props.exercise.duration}</td>
-    <td>{props.exercise.date.substring(0, 10)}</td>
+    <td>{props.product.email}</td>
+    <td>{props.product.description}</td>
+    <td>{props.product.duration}</td>
+    <td>{props.product.date.substring(0, 10)}</td>
     <td>
-      <Link to={"/edit/" + props.exercise._id}>Edit</Link> | <Link to={"#"} onClick={() => { props.deleteExercise(props.exercise._id) }}>Delete</Link>
+      <Link to={"/edit/" + props.product._id}>Edit</Link> | <Link to={"#"} onClick={() => { props.deleteProduct(props.product._id) }}>Delete</Link>
     </td>
   </tr>
 )
 
-export default class ExercisesList extends Component {
+export default class ProductsList extends Component {
   constructor(props) {
     super(props);
 
-    this.deleteExercise = this.deleteExercise.bind(this)
+    this.deleteProduct = this.deleteProduct.bind(this)
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
 
     this.state = {
-      exercises: [],
+      products: [],
       users: [],
       email: ''
     }
@@ -33,9 +33,9 @@ export default class ExercisesList extends Component {
 
   componentDidMount() {
 
-    axios.get('http://localhost:5000/exercises/')
+    axios.get('http://localhost:5000/products/')
       .then(response => {
-        this.setState({ exercises: response.data })
+        this.setState({ products: response.data })
       })
       .catch((error) => {
         console.log(error);
@@ -67,9 +67,9 @@ export default class ExercisesList extends Component {
     this.setState({
       email: e.target.text
     })
-    axios.get('http://localhost:5000/exercises/user/' + e.target.text)
+    axios.get('http://localhost:5000/products/user/' + e.target.text)
       .then(response => {
-        this.setState({ exercises: response.data })
+        this.setState({ products: response.data })
       })
       .catch((error) => {
         console.log(error);
@@ -77,24 +77,24 @@ export default class ExercisesList extends Component {
 
   }
 
-  deleteExercise(id) {
-    axios.delete('http://localhost:5000/exercises/' + id)
+  deleteProduct(id) {
+    axios.delete('http://localhost:5000/products/' + id)
       .then(response => { console.log(response.data) });
 
     this.setState({
-      exercises: this.state.exercises.filter(el => el._id !== id)
+      products: this.state.products.filter(el => el._id !== id)
     })
   }
 
-  exerciseList() {
-    return this.state.exercises.map(currentexercise => {
-      return <Exercise exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
+  productList() {
+    return this.state.products.map(currentproduct => {
+      return <Product product={currentproduct} deleteProduct={this.deleteProduct} key={currentproduct._id} />;
     })
   }
 
   handleSearch(e) {
     this.setState({
-      exercises: this.state.exercises.filter(exer => exer.description.includes(e.target.value))
+      products: this.state.products.filter(exer => exer.description.includes(e.target.value))
     })
   };
 
@@ -102,7 +102,7 @@ export default class ExercisesList extends Component {
   render() {
     return (
       <div>
-        <h2 style={{ textAlign: "center" }}>Logged Exercises</h2>
+        <h2 style={{ textAlign: "center" }}>Logged Products</h2>
         <br />
       <div className="container">
         <Form>
@@ -143,7 +143,7 @@ export default class ExercisesList extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.exerciseList()}
+            {this.productList()}
           </tbody>
         </table>
         </div>

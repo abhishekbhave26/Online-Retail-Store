@@ -69,12 +69,12 @@ export default class NavBar extends Component {
   render() {
     return (
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand onClick={this.home}>Exercise Tracker</Navbar.Brand>
+        <Navbar.Brand onClick={this.home}>Online Retail Store</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link onClick={this.list}>Exercise Log</Nav.Link>
-            <Nav.Link onClick={this.create}>Add Exercise Log</Nav.Link>
+            <Nav.Link onClick={this.list}>Products</Nav.Link>
+            <Nav.Link onClick={this.create}>Add Products</Nav.Link>
             <Nav.Link onClick={this.contact}>Contact Us</Nav.Link>
           </Nav>
           <Nav>
