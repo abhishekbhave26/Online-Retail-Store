@@ -56,7 +56,7 @@ export default class NavBar extends Component {
       var expires = new Date();
       expires.setMinutes(expires.getMinutes() + 15)
       Cookies.set('user', 'temp', { expires: expires, path: '/login' })
-      window.location = '/login'
+      //window.location = '/login'
     }
     
     
