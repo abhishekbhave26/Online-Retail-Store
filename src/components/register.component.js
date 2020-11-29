@@ -81,7 +81,8 @@ export default class Register extends Component {
           else {
             axios.post('http://localhost:5000/users/add', user)
               .then(res => {
-                if (res.data === 'User added!') {
+                if (res.data.header === 'User added!') {
+                  localStorage.setItem("token", res.data.token);
                   window.location = '/list';
                 }
               });

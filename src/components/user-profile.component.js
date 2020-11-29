@@ -22,7 +22,6 @@ export default class UserProfile extends Component {
         this.onChangeWeight = this.onChangeWeight.bind(this);
         this.onChangeHeight = this.onChangeHeight.bind(this);
 
-
         this.onSubmit = this.onSubmit.bind(this);
         this.onReset = this.onReset.bind(this);
 
@@ -43,7 +42,7 @@ export default class UserProfile extends Component {
     }
 
     componentDidMount() {
-
+        
         axios.get('http://localhost:5000/users/email/' + this.props.match.params.userID)
             .then(response => {
                 this.setState({

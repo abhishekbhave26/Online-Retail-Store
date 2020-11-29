@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import Cookies from 'js-cookie';
+import axios from 'axios';
 import { Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import {  NavLink } from 'react-router-dom';
-
 
 export default class NavBar extends Component {
 
@@ -22,10 +21,7 @@ export default class NavBar extends Component {
   }
 
   logout(e) {
-    Cookies.remove('user')
-    this.setState({
-      user: ''
-    })
+    localStorage.removeItem("token");
     window.location = '/login'
   }
 
@@ -51,19 +47,20 @@ export default class NavBar extends Component {
 
   
   componentDidMount() {
-
-    if (Cookies.get('user') === undefined) {
-      var expires = new Date();
-      expires.setMinutes(expires.getMinutes() + 15)
-      Cookies.set('user', 'temp', { expires: expires, path: '/login' })
-      //window.location = '/login'
+    var token = localStorage.getItem("token");
+    if (token){
+      axios.get('http://localhost:5000/authenticate/token/' + token)
+        .then(res => {
+          if (res.data.header === 'TOKEN VALID') {
+            this.setState({ 
+              user: res.data.user.email
+            })
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
-    
-    
-    this.setState({ 
-      user: Cookies.get('user')
-    })
-
   }
 
   render() {

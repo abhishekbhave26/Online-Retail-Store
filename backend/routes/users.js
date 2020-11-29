@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const sgMail = require('@sendgrid/mail');
+const jwt = require('jwt-simple');
 
 let User = require('../models/user.model');
 
@@ -57,11 +58,18 @@ router.route('/add').post((req, res) => {
     name, email, password, address, address2,
     city_state, zip, age, height, weight, isVerified, otp
   });
+  var expires = new Date();
+  expires.setHours(expires.getHours() + 24);
+  var token = jwt.encode({ email:email, exp: expires }, process.env.JWT_SECRET_STRING);
   newUser.save()
     .then(() => {
       sendEmail(email, otp);
-      console.log("Email sent");
-      res.json('User added!')
+      res.json({
+        token: token,
+        expires: expires,
+        user: newUser.toJSON(),
+        header: 'User added!'
+      })
     })
     .catch(err => res.status(400).json('Error'));
 

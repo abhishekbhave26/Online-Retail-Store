@@ -2,18 +2,22 @@ const router = require('express').Router();
 const axios = require('axios');
 const queryString = require('query-string');
 const cookieParser = require('cookie-parser');
-let User = require('../models/user.model');
+const jwt = require('jwt-simple');
 
+let User = require('../models/user.model');
 let token = null;
 
-router.route('/normal').post((req, res) => {
-    User.find({ email: req.body.email })
+router.route('/traditional').post((req, res) => {
+    User.findOne({ email: req.body.email })
         .then(user => {
-            if (user.length == 0) {
-                res.json('User does not exist')
-            }
-            if (req.body.password == user[0].password) {
-                res.json('SUCCESS')
+            if (req.body.password == user.password) {
+                var expires = new Date();
+                expires.setHours(expires.getHours() + 24);
+                var token = jwt.encode({ email:user.email, exp: expires }, process.env.JWT_SECRET_STRING);
+                res.json({
+                    token: token,
+                    header: 'SUCCESS'
+                })
             }
             else {
                 res.json('Wrong password')
@@ -23,6 +27,27 @@ router.route('/normal').post((req, res) => {
 
 });
 
+router.route('/token/:token').get((req, res) => {
+    token = req.params.token;
+    if (token) {
+        try {
+          var decoded = jwt.decode(token, process.env.JWT_SECRET_STRING);
+          if (decoded.exp <= Date.now()) {
+            res.end('Access token has expired', 400);
+          }
+          User.findOne({ email: decoded.email }, function(err, user) {
+            res.json({
+                user: user.toJSON(),
+                header: 'TOKEN VALID'
+              })
+          });
+        } catch (err) {
+            res.send('BAD TOKEN');
+        }
+    } else {
+        res.send('BAD TOKEN');
+    }
+});
 
 router.route('/github').get((req, res) => {
     getGithubAccessTokenFromCode(req.query.code).
