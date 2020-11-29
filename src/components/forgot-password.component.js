@@ -31,7 +31,7 @@ export default class ForgotPassword extends Component {
         }
     }
 
-
+    componentDidMount() {}
 
     onChangeEmail(e) {
         this.setState({

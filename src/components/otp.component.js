@@ -20,6 +20,8 @@ export default class OTP extends Component {
         }
     }
 
+    componentDidMount() {}
+
     onChangeEmail(e) {
         this.setState({
             email: e.target.value
