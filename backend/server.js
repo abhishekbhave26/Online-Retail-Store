@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-require('dotenv').config();
+require('custom-env').env();
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -11,7 +11,9 @@ app.use(cors());
 app.use(express.json());
 
 const uriConnStr = process.env.ATLAS_URI;
+const app_env = process.env.APP_ENV;
 
+console.log("Running in " + app_env + " environment.");
 mongoose.connect(uriConnStr, { useNewUrlParser: true, useCreateIndex: true }
 );
 const connection = mongoose.connection;

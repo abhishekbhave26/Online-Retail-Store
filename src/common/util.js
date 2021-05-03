@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 var isProfileValidated = function(state){
     
     if (state.password !== state.password2) {
@@ -10,9 +12,6 @@ var isProfileValidated = function(state){
     }
     return true;
 }
-
-exports.isProfileValidated = isProfileValidated;
-
 
 var isNumbered = function(state){
     
@@ -36,13 +35,8 @@ var isNumbered = function(state){
         alert("Please enter height as a number");
         return false;
     }
-    
-
     return true;
 }
-
-exports.isNumbered = isNumbered;
-
 
 var isProductValidated = function(state){
     
@@ -53,4 +47,27 @@ var isProductValidated = function(state){
     return true;
 }
 
+var isUserLoggedIn = async function(state){
+    var token = localStorage.getItem("token");
+    if (token){
+      await axios.get('http://localhost:5000/authenticate/token/' + token)
+        .then(res => {
+          if (res.data.header === 'TOKEN VALID') {
+            return true;
+          } else {
+            return false;
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          return false;
+        })
+    } else {
+      return false;
+    }
+}
+
+exports.isProfileValidated = isProfileValidated;
+exports.isNumbered = isNumbered;
 exports.isProductValidated = isProductValidated;
+exports.isUserLoggedIn = isUserLoggedIn;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as queryString from 'query-string';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import '../css/Login.css';
 import { Link } from 'react-router-dom';
 import { FacebookLoginButton, GithubLoginButton, MicrosoftLoginButton, GoogleLoginButton } from "react-social-login-buttons";
@@ -48,12 +47,10 @@ export default class Login extends Component {
             password: this.state.password
         }
 
-        axios.post('http://localhost:5000/authenticate/normal', user)
+        axios.post('http://localhost:5000/authenticate/traditional', user)
             .then(res => {
-                if (res.data === 'SUCCESS') {
-                    var expires = new Date();
-                    expires.setMinutes(expires.getMinutes() + 20)
-                    Cookies.set('user', user.email, { expires: expires })
+                if (res.data.header === 'SUCCESS') {
+                    localStorage.setItem("token", res.data.token);
                     window.location = '/list';
                 }
                 else if (res.data === 'User does not exist') {
@@ -91,7 +88,6 @@ export default class Login extends Component {
         const facebookLoginUrl = `https://www.facebook.com/v4.0/dialog/oauth?${params}`;
         window.location = facebookLoginUrl;
     }
-
 
 
     render() {

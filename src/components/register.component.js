@@ -73,15 +73,16 @@ export default class Register extends Component {
         password: this.state.password
       }
 
-      axios.get('http://localhost:5000/users/email/' + this.props.match.params.userID)
+      axios.get('http://localhost:5000/users/email/' + this.state.email)
         .then(response => {
-          if (response !== null) {
+          if (response.data !== null) {
             alert('User with this email id already exists. Please login or try forgot password.')
           }
           else {
             axios.post('http://localhost:5000/users/add', user)
               .then(res => {
-                if (res.data === 'User added!') {
+                if (res.data.header === 'User added!') {
+                  localStorage.setItem("token", res.data.token);
                   window.location = '/list';
                 }
               });
