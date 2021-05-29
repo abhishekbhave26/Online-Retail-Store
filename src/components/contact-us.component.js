@@ -48,7 +48,7 @@ export default class ContactUs extends Component {
 
     console.log("Thank you for your details, our team members will reach out to you");
 
-    axios.post('http://localhost:5000/contact', contact)
+    axios.post('http://localhost:5000/contact/add', contact)
       .then(res => console.log(res.data));
 
     window.location = '/list';
