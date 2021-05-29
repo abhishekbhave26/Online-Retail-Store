@@ -31,15 +31,23 @@ connection.once('open', () => {
 const authenticateRouter = require('./routes/authenticate');
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
-const contactRouter = require('./routes/contact');
+const helpRouter = require('./routes/help');
+const categoryRouter = require('./routes/category');
+const otpRouter = require('./routes/otp');
+const orderRouter = require('./routes/order');
+const notificationRouter = require('./routes/notification');
 
-app.use('/authenticate',authenticateRouter);
+app.use('/authenticate', authenticateRouter);
 app.use('/products', productsRouter);
 app.use('/users', usersRouter);
-app.use('/contact', contactRouter);
+app.use('/help', helpRouter);
+app.use('/category', categoryRouter);
+app.use('/otp', otpRouter);
+app.use('/order', orderRouter);
+app.use('/notification', notificationRouter);
 
 const server = app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
+  console.log(`Server is running on port: ${port}`);
 });
 
 module.exports = server;

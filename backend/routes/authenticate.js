@@ -1,19 +1,18 @@
 const router = require('express').Router();
 const axios = require('axios');
 const queryString = require('query-string');
-const cookieParser = require('cookie-parser');
 const jwt = require('jwt-simple');
 
 let User = require('../models/user.model');
 let token = null;
 
 router.route('/traditional').post((req, res) => {
-    User.findOne({ email: req.body.email })
+    User.findOne({ user_email: req.body.user_email })
         .then(user => {
-            if (req.body.password == user.password) {
+            if (req.body.user_password === user.user_password) {
                 var expires = new Date();
                 expires.setHours(expires.getHours() + 24);
-                var token = jwt.encode({ email:user.email, exp: expires }, process.env.JWT_SECRET_STRING);
+                var token = jwt.encode({ user_email: user.user_email, exp: expires }, process.env.JWT_SECRET_STRING);
                 res.json({
                     token: token,
                     header: 'SUCCESS'
@@ -31,16 +30,16 @@ router.route('/token/:token').get((req, res) => {
     token = req.params.token;
     if (token) {
         try {
-          var decoded = jwt.decode(token, process.env.JWT_SECRET_STRING);
-          if (decoded.exp <= Date.now()) {
-            res.end('Access token has expired', 400);
-          }
-          User.findOne({ email: decoded.email }, function(err, user) {
-            res.json({
-                user: user.toJSON(),
-                header: 'TOKEN VALID'
-              })
-          });
+            var decoded = jwt.decode(token, process.env.JWT_SECRET_STRING);
+            if (decoded.exp <= Date.now()) {
+                res.end('Access token has expired', 400);
+            }
+            User.findOne({ user_email: decoded.user_email }, function (err, user) {
+                res.json({
+                    user: user.toJSON(),
+                    header: 'TOKEN VALID'
+                })
+            });
         } catch (err) {
             res.send('BAD TOKEN');
         }
@@ -80,10 +79,6 @@ router.route('/facebook').get((req, res) => {
         });
 });
 
-
-
-
-
 async function getGithubAccessTokenFromCode(code) {
     let token = null;
     const params = {
@@ -109,12 +104,9 @@ async function getGitHubUserData(access_token) {
             Authorization: `token ${access_token}`,
         },
     });
-    console.log(data); // { id, email, name, login, avatar_url }
+    console.log(data); // { id, user_email, name, login, avatar_url }
     return data;
 };
-
-
-
 
 async function getFacebookAccessTokenFromCode(code) {
     let token = null;
@@ -142,7 +134,7 @@ async function getFacebookUserData(access_token) {
             Authorization: `token ${access_token}`,
         },
     });
-    console.log(data); // { id, email, name, login, avatar_url }
+    console.log(data); // { id, user_email, name, login, avatar_url }
     return data;
 };
 
