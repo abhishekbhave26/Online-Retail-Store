@@ -66,7 +66,7 @@ router.route('/add').post((req, res) => {
 			header: 'User added!'
 		})
 	})
-	.catch(err => res.status(400).json('Error'));
+	.catch(err => res.status(400).json('Error: ' + err));
 });
 
 // find a user by id
