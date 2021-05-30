@@ -38,7 +38,6 @@ router.route('/').get((req, res) => {
 // create a new user
 router.route('/add').post((req, res) => {
 	
-	const user_id = req.body.user_id;
 	const user_name = req.body.user_name;
 	const user_email = req.body.user_email;
 	const user_password = req.body.user_password;
@@ -51,7 +50,7 @@ router.route('/add').post((req, res) => {
 	const user_otp = generateOTP();
 	
 	const newUser = new User({
-		user_id, user_name, user_email, user_password, user_address, user_address2,
+		user_name, user_email, user_password, user_address, user_address2,
 		user_city_state, user_zip, user_contact, user_isVerified, user_otp
 	});
 	var expires = new Date();
@@ -72,7 +71,7 @@ router.route('/add').post((req, res) => {
 
 // find a user by id
 router.route('/:id').get((req, res) => {
-	User.findById(req.params.user_id)
+	User.findById(req.params._id)
 	.then(user => res.json(user))
 	.catch(err => res.status(400).json('Error: ' + err));
 });
@@ -86,16 +85,15 @@ router.route('/email/:id').get((req, res) => {
 
 // delete a user
 router.route('/:id').delete((req, res) => {
-	User.findByIdAndDelete(req.params.user_id)
+	User.findByIdAndDelete(req.params._id)
 	.then(() => res.json('User deleted'))
 	.catch(err => res.status(400).json('Error: ' + err));
 });
 
 // Update user
 router.route('/update/:id').post((req, res) => {
-	User.findOne({ user_email: req.params.user_id })
+	User.findOne({ user_email: req.params._id })
 	.then(user => {
-		user.user_id = req.body.user_id;
 		user.user_name = req.body.user_name;
 		user.user_password = req.body.user_password;
 		user.user_contact = req.body.user_contact;
@@ -128,7 +126,7 @@ router.route('/update/password/:id').post((req, res) => {
 
 // OTP verification
 router.route('/otp/:id').post((req, res) => {
-	User.findOne({ user_email: req.params.user_id })
+	User.findOne({ user_email: req.params._id })
 	.then(user => {
 		if (parseInt(user.user_otp) === parseInt(req.body.user_otp)) {
 			user.user_isVerified = true;

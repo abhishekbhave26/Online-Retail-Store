@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Here use enum for order status where enum has string inside it.
-
 const orderSchema = new Schema({
-    order_id: { type: Number, required: true},
     user_id: { type: Number, required: true},
     user_email: { type: String, required: true, unique: true, trim: true},
     order_total: { type: Number, required: true },
