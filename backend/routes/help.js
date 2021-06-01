@@ -1,15 +1,8 @@
 const router = require('express').Router();
 let Help = require('../models/help.model');
-let enums = require('../models/enums/enum');
+let enums = require('../common/enum');
 
-// get all help requests
-router.route('/').get((req, res) => {
-	Help.find()
-	.then(help_reqs => res.json(help_reqs))
-	.catch(err => res.status(400).json('Error: ' + err));
-});
-
-// creates a new help request
+// create a new help request
 router.route('/add').post((req, res) => {
 	const user_name = req.body.user_name;
 	const user_email = req.body.user_email;
@@ -28,12 +21,27 @@ router.route('/add').post((req, res) => {
 	.catch(err => res.status(400).json('Error: ' + err));
 });
 
+// get all help requests
+router.route('/').get((req, res) => {
+	Help.find()
+	.then(help_reqs => res.json(help_reqs))
+	.catch(err => res.status(400).json('Error: ' + err));
+});
+
 // find a help request by id
 router.route('/:id').get((req, res) => {
 	Help.findById(req.params._id)
 	.then(help => res.json(help))
 	.catch(err => res.status(400).json('Error' + err));
 });
+
+// get list of help requests for a given user
+router.route('/user/:id').get((req, res) => {
+	Help.find({ user_email: req.params.user_email })
+	.then(help_reqs => res.json(help_reqs))
+	.catch(err => res.status(400).json('Error' + err));
+	}
+);
 
 // delete help request
 router.route('/:id').delete((req, res) => {
@@ -58,13 +66,5 @@ router.route('/update/:id').post((req, res) => {
 	})
 	.catch(err => res.status(400).json('Error' + err));
 });
-
-// returns list of help requests for a given user
-router.route('/user/:id').get((req, res) => {
-	Help.find({ _id: req.params._id })
-		.then(help_reqs => res.json(help_reqs))
-		.catch(err => res.status(400).json('Error' + err));
-	}
-);
 
 module.exports = router;

@@ -10,7 +10,14 @@ const order_status_type = {
     DELIVERED: "DELIVERED"
 }
 
+const payment_status_type = {
+    PENDING: "PENDING",
+    COMPLETED: "COMPLETED",
+    REFUNDED: "REFUNDED"
+}
+
 module.exports = { 
     help_status_type, 
-    order_status_type
+    order_status_type,
+    payment_status_type
 };

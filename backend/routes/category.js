@@ -1,14 +1,7 @@
 const router = require('express').Router();
 let Category = require('../models/category.model');
 
-// get all categories
-router.route('/').get((req, res) => {
-	Category.find()
-	.then(categories => res.json(categories))
-	.catch(err => res.status(400).json('Error: ' + err));
-});
-
-// creates a new category
+// create a new category
 router.route('/add').post((req, res) => {
 	const category_name = req.body.category_name;
 	const category_description = req.body.category_description;
@@ -22,6 +15,13 @@ router.route('/add').post((req, res) => {
 	
 	newCategory.save()
 	.then(() => res.json('New category added successful.'))
+	.catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all categories
+router.route('/').get((req, res) => {
+	Category.find()
+	.then(categories => res.json(categories))
 	.catch(err => res.status(400).json('Error: ' + err));
 });
 

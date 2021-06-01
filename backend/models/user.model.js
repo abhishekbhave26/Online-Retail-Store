@@ -10,9 +10,10 @@ const userSchema = new Schema({
     user_address: { type: String },
     user_address2: { type: String },
     user_city_state: { type: String },
-    user_zip: { type: Number },
-    user_isVerified: { type: Boolean },
-    user_otp: { type: Number }
+    user_zip_code: { type: Number },
+    user_otp: { type: Number },
+    is_user_verified: { type: Boolean },
+    is_user_admin: {type: Boolean, required: true}
 }, {
     timestamps: true,
 });
