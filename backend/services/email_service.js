@@ -41,8 +41,8 @@ async function sendEmail(user_email, user_otp) {
 }
 
 module.exports = {
-	sendUserRegistrationOTPEmail,
-	sendOrderReceivedEmail,
-	sendOrderUpdatedEmail,
-    sendEmail, 
+	sendUserRegistrationOTPEmail : sendUserRegistrationOTPEmail,
+	sendOrderReceivedEmail : sendOrderReceivedEmail,
+	sendOrderUpdatedEmail : sendOrderUpdatedEmail,
+	sendEmail : sendEmail
 };

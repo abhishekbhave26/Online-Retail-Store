@@ -1,7 +1,7 @@
 const router = require('express').Router();
 let Order = require('../models/order.model');
 let enum_service = require('../services/enum_service');
-let sendEmail = require('../services/email_service');
+let email_service = require('../services/email_service');
 
 // create a new order
 router.route('/add').post((req, res) => {
@@ -33,7 +33,7 @@ router.route('/add').post((req, res) => {
 	
 	newOrder.save()
 	.then(() => {
-		//sendEmail(user_email, user_otp);
+		//email_service.sendEmail(user_email, user_otp);
 		res.json('Order placed successfully.')
 	})
 	.catch(err => res.status(400).json('Error: ' + err));
@@ -73,7 +73,7 @@ router.route('/update/:id').post((req, res) => {
 
 		order.save()
 		.then(() => {
-            //sendEmail(user_email, user_otp);
+            //email_service.sendEmail(user_email, user_otp);
 		    res.json('Order updated successfully.')
         })
 		.catch(err => res.status(400).json('Error' + err));

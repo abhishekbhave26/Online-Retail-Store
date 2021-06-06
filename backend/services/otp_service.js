@@ -8,7 +8,7 @@ function matchOTP(input_otp ,user_otp) {
 	return parseInt(input_otp) === parseInt(user_otp);
 }
 
-module.exports = { 
-    generateOTP,
-	matchOTP 
+module.exports = {
+	generateOTP : generateOTP,
+	matchOTP : matchOTP
 };

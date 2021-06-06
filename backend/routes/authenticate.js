@@ -9,17 +9,21 @@ let token = null;
 router.route('/traditional').post((req, res) => {
     User.findOne({ user_email: req.body.user_email })
         .then(user => {
-            if (req.body.user_password === user.user_password) {
-                var expires = new Date();
-                expires.setHours(expires.getHours() + 24);
-                var token = jwt.encode({ user_email: user.user_email, exp: expires }, process.env.JWT_SECRET_STRING);
-                res.json({
-                    token: token,
-                    header: 'SUCCESS'
-                })
-            }
-            else {
-                res.json('Wrong password')
+            if (user === null) {
+                res.json('Error: User not found ');
+            } else {
+                if (user.validPassword(req.body.user_password)) { 
+                    var expires = new Date();
+                    expires.setHours(expires.getHours() + 24);
+                    var token = jwt.encode({ user_email: user.user_email, exp: expires }, process.env.JWT_SECRET_STRING);
+                    res.json({
+                        token: token,
+                        header: 'SUCCESS'
+                    })
+                }
+                else {
+                    res.json('Wrong password')
+                }
             }
         })
         .catch(err => res.status(400).json('Error ' + err));
