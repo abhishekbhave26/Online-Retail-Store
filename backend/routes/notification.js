@@ -1,7 +1,7 @@
 const router = require('express').Router();
 let Notification = require('../models/notification.model');
 
-// create a new help request
+// create notofication preference for user
 router.route('/add').post((req, res) => {
 	const notification_preferences = req.body.notification_preferences;
 	const user_email = req.body.user_email;

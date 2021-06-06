@@ -1,17 +1,17 @@
 const router = require('express').Router();
 let Order = require('../models/order.model');
-let enums = require('../common/enum');
-let sendEmail = require('../common/email_service');
+let enum_service = require('../services/enum_service');
+let sendEmail = require('../services/email_service');
 
 // create a new order
 router.route('/add').post((req, res) => {
 	const user_email = req.body.user_email;
     const order_details = req.body.order_details;
     const order_total = req.body.order_total;
-    const order_status = enums.order_status_type.SUBMITTED;
+    const order_status = enum_service.order_status_type.SUBMITTED;
     const order_placed_date = req.body.order_placed_date;
     const order_delivery_date = req.body.order_delivery_date;
-    const payment_status = enums.payment_status_type.PENDING;
+    const payment_status = enum_service.payment_status_type.PENDING;
     const card_holder_name = req.body.card_holder_name;
     const card_number = req.body.card_number;
     const card_expiry_date = req.body.card_expiry_date;

@@ -1,13 +1,13 @@
 const router = require('express').Router();
 let Help = require('../models/help.model');
-let enums = require('../common/enum');
+let enum_service = require('../services/enum_service');
 
 // create a new help request
 router.route('/add').post((req, res) => {
 	const user_name = req.body.user_name;
 	const user_email = req.body.user_email;
 	const help_description = req.body.help_description;
-	const help_status = enums.help_status_type.OPEN;
+	const help_status = enum_service.help_status_type.OPEN;
 	
 	const newHelp = new Help({
 		user_name,

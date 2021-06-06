@@ -2,12 +2,12 @@ var common = require("./common");
 var server = common.server;
 
 //clear db before all tests
-let Contact = require('../models/contact.model');
-Contact.collection.drop();
+//let Help = require('../models/help.model');
+//Help.collection.drop();
 
-// run contacts test
-const test_contacts = require('./test-contacts/test-contacts');
-//test_contacts.test();
+// run helps test
+//const test_helps = require('./test-helps/test-helps');
+//test_helps.test();
 
 
 //clear db before all tests

@@ -32,7 +32,6 @@ const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 const helpRouter = require('./routes/help');
 const categoryRouter = require('./routes/category');
-const otpRouter = require('./routes/otp');
 const orderRouter = require('./routes/order');
 const userNotificationRouter = require('./routes/notification');
 
@@ -41,7 +40,6 @@ app.use('/products', productsRouter);
 app.use('/users', usersRouter);
 app.use('/help', helpRouter);
 app.use('/category', categoryRouter);
-app.use('/otp', otpRouter);
 app.use('/order', orderRouter);
 app.use('/users/:id/notification', userNotificationRouter);
 

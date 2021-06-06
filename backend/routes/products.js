@@ -70,22 +70,6 @@ router.route('/update/:id').post((req, res) => {
 	.catch(err => res.status(400).json('Error' + err));
 });
 
-/*
-// returns list of products with given user
-router.route('/user/:id').get((req, res) => {
-	if (req.params.id === '-- ALL USERS --') {
-		Product.find()
-		.then(products => res.json(products))
-		.catch(err => res.status(400).json('Error: ' + err));
-	}
-	else {
-		Product.find({ _id: req.params._id })
-		.then(products => res.json(products))
-		.catch(err => res.status(400).json('Error' + err));
-	}
-});
-*/
-
 //returns a list of products of a particular category
 router.route('/category/:id').get((req, res) => {
 	Product.find({ category_id: req.params.category_id })
